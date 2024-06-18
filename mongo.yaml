@@ -7,20 +7,20 @@ metadata:
 spec:
   replicas: 1
   selector:
-    matchLabels:
+    matchLabels: # all the pods with this label belong to this deployment
       app: mongo
-  template:
+  template: # configuration of the Pod within the Deployment
     metadata:
       labels:
         app: mongo
     spec:
       containers:
       - name: mongodb
-        image: mongo:5.0
+        image: mongo:5.0 # https://hub.docker.com/_/mongo
         ports:
         - containerPort: 27017
         env:
-        - name: MONGO_INITDB_ROOT_USERNAME
+        - name: MONGO_INITDB_ROOT_USERNAME # a user with these credentials will be created on MongoDB start up.
           valueFrom:
             secretKeyRef:
               name: mongo-secret
@@ -37,8 +37,8 @@ metadata:
   name: mongo-service
 spec:
   selector:
-    app: mongo
+    app: mongo # match the labels of the pod connected to this service.
   ports:
     - protocol: TCP
       port: 27017
-      targetPort: 27017
+      targetPort: 27017 # port of the pods belonging to this service. should be the same as container port above.

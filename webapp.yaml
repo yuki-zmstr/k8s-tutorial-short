@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: webapp
-        image: nanajanashia/k8s-demo-app:v1.0
+        image: nanajanashia/k8s-demo-app:v1.0 # https://hub.docker.com/r/nanajanashia/k8s-demo-app
         ports:
         - containerPort: 3000
         env:
@@ -41,11 +41,11 @@ kind: Service
 metadata:
   name: webapp-service
 spec:
-  type: NodePort
+  type: NodePort # External Service. By default is ClusterIP which is internal.
   selector:
     app: webapp
   ports:
     - protocol: TCP
       port: 3000
       targetPort: 3000
-      nodePort: 30100
+      nodePort: 30100 # able to access this service.
